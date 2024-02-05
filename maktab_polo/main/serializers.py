@@ -10,7 +10,7 @@ class VendorListSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super(VendorListSerializer, self).__init__(*args, **kwargs)
-        self.Meta.depth = 1
+        # self.Meta.depth = 1
 
 
 class VendorDetailSerializer(serializers.ModelSerializer):
