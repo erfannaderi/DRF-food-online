@@ -39,6 +39,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 class CustomerAddressAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(ProductRatting)
 class ProductRattingAdmin(admin.ModelAdmin):
     pass
