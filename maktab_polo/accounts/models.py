@@ -5,7 +5,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin, Group, Permission
 
 
-
 # Create your models here.
 class UserManager(BaseUserManager):
     def create_user(self, first_name: str, last_name: str, username: str, email: str, password: str = None) -> 'User':
