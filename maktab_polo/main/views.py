@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 from . import models
 from .serializers import VendorListSerializer, VendorDetailSerializer, ProductListSerializer, ProductDetailSerializer, \
     CustomerListSerializer, CustomerDetailSerializer, OrderListSerializer, OrderDetailSerializer, \
-    CustomerAddressSerializer, ProductRattingSerializer
+    CustomerAddressSerializer, ProductRattingSerializer, CategoryListSerializer, CategoryDetailSerializer
 
 
 # Create your views here.
@@ -80,3 +80,15 @@ class CustomerAddressViewSet(ModelViewSet):
 class ProductRattingViewSet(ModelViewSet):
     queryset = models.ProductRatting.objects.all()
     serializer_class = ProductRattingSerializer
+
+
+class CategoryList(ListAPIView):
+    queryset = models.ProductCategory.objects.all()
+    serializer_class = CategoryListSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+
+class CategoryDetail(RetrieveUpdateDestroyAPIView):
+    queryset = models.ProductCategory.objects.all()
+    serializer_class = CategoryDetailSerializer
+    # permission_classes = [permissions.IsAuthenticated]

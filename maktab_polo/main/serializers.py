@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from main.models import Vendor, Product, Customer, Order, OrderItem, CustomerAddress, ProductRatting
+from main.models import Vendor, Product, Customer, Order, OrderItem, CustomerAddress, ProductRatting, ProductCategory
 
 
 class VendorListSerializer(serializers.ModelSerializer):
@@ -10,7 +10,7 @@ class VendorListSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super(VendorListSerializer, self).__init__(*args, **kwargs)
-        self.Meta.depth = 1
+        # self.Meta.depth = 1
 
 
 class VendorDetailSerializer(serializers.ModelSerializer):
@@ -105,4 +105,24 @@ class ProductRattingSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super(ProductRattingSerializer, self).__init__(*args, **kwargs)
+        self.Meta.depth = 1
+
+
+class CategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductCategory
+        fields = ['id', 'title', 'detail']
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryListSerializer, self).__init__(*args, **kwargs)
+        # self.Meta.depth = 1
+
+
+class CategoryDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductCategory
+        fields = ['id', 'title', 'detail']
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryDetailSerializer, self).__init__(*args, **kwargs)
         self.Meta.depth = 1
