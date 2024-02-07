@@ -115,7 +115,7 @@ function Header() {
                                               style={{marginTop: '22px'}} href="#">Register Restaurant</a></span>
                                 </div>
                             </div>
-
+                            <Link to='/Account/ClientDashboard'>go to dash board</Link>
                         </div>
                     </div>
                 </div>

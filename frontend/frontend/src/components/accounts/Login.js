@@ -1,7 +1,7 @@
 import logo from "../../foodOnlineLogo.png";
 import {Link} from "react-router-dom";
 
-function Login(props) {
+function Login() {
     return (
         <div className="container">
             <div className="row justify-content-center">
