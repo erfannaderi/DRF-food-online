@@ -106,11 +106,11 @@ function Header() {
                                     <Link to="/Market-place/Listing"
                                        className="btn btn-outline-danger text-uppercase font-weight-bold"
                                        style={{marginTop: '22px'}}>Market Place</Link>
-                                    <a className="cs-color cs-popup-joinus-btn login-popup btn btn-danger p-2 text-light"
-                                       href="#">Login</a>
-                                    <a href="#"
+                                    <Link className="cs-color cs-popup-joinus-btn login-popup btn btn-danger p-2 text-light"
+                                       to="/Account/Login">Login</Link>
+                                    <Link to="/Account/RegisterClient"
                                        className="cs-color cs-popup-joinus-btn login-popup btn btn-danger p-2 text-light"
-                                       style={{marginRight: '10px'}}> Register</a>
+                                       style={{marginRight: '10px'}}> Register</Link>
                                     <span> <a className="get-start-btn center btn btn-danger p-2 text-light"
                                               style={{marginTop: '22px'}} href="#">Register Restaurant</a></span>
                                 </div>

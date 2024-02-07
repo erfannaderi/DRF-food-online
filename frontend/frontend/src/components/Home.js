@@ -351,7 +351,7 @@ function Home() {
                         </figcaption>
                     </figure>
                 </div>
-                <div className="carousel-item">
+                <div className="carousel-item" id="mmd">
                     <figure className="text-center">
                         <blockquote className="blockquote">
                             <p>A well-known quote, contained in a blockquote element.</p>

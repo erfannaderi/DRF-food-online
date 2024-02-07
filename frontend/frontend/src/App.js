@@ -8,6 +8,8 @@ import Home from './components/Home';
 import Footer from './components/Includes/Footer';
 import Listing from './components/marketplace/Listing';
 import Detail from './components/marketplace/Detail';
+import RegisterClient from './components/accounts/RegisterClient';
+import Login from './components/accounts/Login';
 
 function App() {
     return (
@@ -15,6 +17,8 @@ function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/Account/RegisterClient" element={<RegisterClient />} />
+                <Route path="/Account/Login" element={<Login />} />
                 <Route path="/Market-place/Listing" element={<Listing />} />
                 <Route path="/Market-place/Detail/:Vendor_slug/:vendor_id" element={<Detail />} />
             </Routes>
