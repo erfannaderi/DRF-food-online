@@ -1,12 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from accounts.models import User
 from main.models import BaseModel
 from vendor.models import Vendor
 
 
 # Create your models here.
-class Category(BaseModel):
+class Category(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     category_name = models.CharField(max_length=50, verbose_name=_('Category Name'))
     description = models.TextField(max_length=250, blank=True, verbose_name=_('Description'))
@@ -29,7 +30,7 @@ class Category(BaseModel):
         self.category_name = self.category_name.capitalize()
 
 
-class RawItem(BaseModel):
+class RawItem(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name='Raw Item Name')
     description = models.TextField(max_length=250, blank=True, verbose_name='Description')
@@ -41,7 +42,7 @@ class RawItem(BaseModel):
         return self.name
 
 
-class FoodItem(BaseModel):
+class FoodItem(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='fooditems')
     food_title = models.CharField(max_length=50, unique=True, verbose_name=_('Food Title'))
@@ -61,3 +62,14 @@ class FoodItem(BaseModel):
 
     def __str__(self):
         return self.food_title
+
+
+class ProductRatting(models.Model):
+    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ratting_customers')
+    product = models.ForeignKey(FoodItem, on_delete=models.CASCADE, related_name='product_ratings')
+    ratings = models.IntegerField()
+    reviews = models.TextField(blank=True, null=True)
+    add_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.ratings} - {self.reviews}'

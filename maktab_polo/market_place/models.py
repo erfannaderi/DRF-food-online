@@ -6,7 +6,7 @@ from main.models import BaseModel
 
 
 # Create your models here.
-class Discount(BaseModel):
+class Discount(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     discount_code = models.CharField(max_length=50)
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Discount Percentage (%)')
@@ -23,7 +23,7 @@ class Discount(BaseModel):
         return f"{self.user.username}'s Discount ({self.discount_code})"
 
 
-class Cart(BaseModel):
+class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
     quantity = models.SmallIntegerField()
@@ -36,7 +36,7 @@ class Cart(BaseModel):
         return self.user
 
 
-class Tax(BaseModel):
+class Tax(models.Model):
     tax_type = models.CharField(max_length=20, unique=True, db_index=True)
     tax_percentage = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Tax Percentage (%)')
     is_active = models.BooleanField(default=True)
