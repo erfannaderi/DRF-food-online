@@ -75,8 +75,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=100, unique=True)
     phone_number = models.CharField(max_length=14, blank=True)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='user/profile_picture', blank=True, null=True)
-    cover_photos = models.ImageField(upload_to='user/cover_photos', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='media/user/profile_picture', blank=True, null=True)
+    cover_photos = models.ImageField(upload_to='media/user/cover_photos', blank=True, null=True)
     # required fields
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)

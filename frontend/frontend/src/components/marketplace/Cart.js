@@ -7,8 +7,8 @@ function Cart(props) {
             <div className="card">
                 <img className="card-img-top" src={logo} alt="Card image cap"/>
                 <div className="card-body">
-                    <h4 className="card-title">{props.product.title}</h4>
-                    <h5 className="card-body text-muted">Price: {props.product.price} hezar toman</h5>
+                    <h4 className="card-title">{props.title}</h4>
+                    <h5 className="card-body text-muted">Price: {props.price} hezar toman</h5>
                 </div>
                 <div className="card-footer">
                     <button title="Add to Cart" className="btn btn-success btn-sm">

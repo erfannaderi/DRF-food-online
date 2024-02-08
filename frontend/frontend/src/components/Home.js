@@ -1,4 +1,4 @@
-import logo from "../foodOnlineLogo.png";
+import logo from "../extra-images/bg-image1.jpg";
 import Cart from "./marketplace/Cart";
 // this below is for hooks if you use functional components if classes use life cycle hooks ig but so far we're doing func
 import {useState, useEffect} from "react";
@@ -6,414 +6,328 @@ import {useState, useEffect} from "react";
 function Home() {
 
 
-    const products = [
-        {'title': 'python', 'price': 200},
-        {'title': 'Django', 'price': 200},
-        {'title': 'Flask', 'price': 230},
-    ];
-    const [Products, setProducts] = useState([])
-    useEffect(() => {
-            fetchData('http://127.0.0.1:8000/API/Menu/Categories/');
-        }
-    )
+    const [vendors, setVendors] = useState([]);
+    const [nextPage, setNextPage] = useState(null);
 
-    async function fetchData(baseurl) {
-        async function logMovies() {
-            const response = await fetch(baseurl);
-            const movies = await response.json()
-                .then((movies) => setProducts(movies.results));
+    useEffect(() => {
+        const fetchData = async () => {
+            const url = 'http://127.0.0.1:8000/API/Vendor/vendors/';
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // Add any additional headers if required
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+
+                const data = await response.json();
+                setVendors(data.result);
+                setNextPage(data.links.next);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const fetchNextPage = async (nextPageUrl) => {
+        try {
+            const response = await fetch(nextPageUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // Add any additional headers if required
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+
+            const data = await response.json();
+            setVendors((prevVendors) => [...prevVendors, ...data.result]);
+            setNextPage(data.links.next);
+        } catch (error) {
+            console.error('Error fetching next page:', error);
         }
     };
 
-    // logMovies()
-
     return (
-        <main className="mt-4">
-            <div className="container">
-                {/*latest product section*/}
-                {/*{products.map((product) => <Cart title={product.title}/>)}*/}
-                {products.map((product) => <Cart product={product}/>)}
-                <h2 className="mb-5">Latest Products <a href='#'
-                                                        className="float-end btn btn-sm btn-danger text-white">
-                    See Full List Products <i className="fa-solid fa-arrow-right-long"></i></a></h2>
-                <div className="row mb-4">
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
+        <main classsName="mt-4">
+
+            {/*<!--Main Wrapper-->*/}
+
+            {/*<!-- Header End -->*/}
+            {/*<!-- Main Section Start -->*/}
+            <div className="main-section">
+                {/*// <!-- Home Pages Elements Strat -->*/}
+                {/*// <!-- Main Search Start -->*/}
+                <div className="page-section nopadding cs-nomargin"
+                     style={{
+                         paddingTop: '200px',
+                         paddingBottom: '150px',
+                         marginBottom: '0px',
+                         background: `url(${logo}) no-repeat center / cover`
+                     }}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                <div className="element-title">
+                                    <h1 style={{
+                                        fontSize: '40px',
+                                        color: '#505050',
+                                        textTransform: 'uppercase',
+                                        lineHeight: '50px',
+                                        marginBottom: '25px',
+                                        textAlign: 'center'
+                                    }}>We are in the business of food<br/>our restaurants do</h1>
+                                    <p style={{
+                                        fontSize: '18px',
+                                        letterSpacing: '1px',
+                                        color: '#505050',
+                                        textAlign: 'center'
+                                    }}>
+                                        Ridiculus sociosqu
+                                        cursus neque cursus curae ante scelerisque vehicula.</p>
+                                </div>
                             </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                <div className="main-search fancy bg-holder">
+                                    <form action="#" method="GET">
+                                        <div className="row">
+                                            <div className="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                <div className="field-holder">
+                                                    <input type="text" name="keyword" placeholder="Resturant name"/>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div className="field-holder">
+                                                    <ul>
+                                                        <li className="select-location">
+                                                            <div
+                                                                className="foodbakery-locations-fields-group foodbakery-focus-out">
+                                                        <span className="foodbakery-search-location-icon"><i
+                                                            className="icon-location"></i></span>
+                                                                <input type="text" name="address"
+                                                                       className="location-field-text filter"
+                                                                       placeholder="All Locations" id="id_address"/>
+                                                            </div>
+                                                            <input type="hidden" name="lat" value="" id="id_latitude"/>
+                                                            <input type="hidden" name="lng" value=""
+                                                                   id="id_longitude"/>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                <select name="radius" id="radius"
+                                                        style={{
+                                                            height: '50px',
+                                                            color: 'rebeccapurple'
+                                                        }}>
+                                                    <option value="" selected>CHOOSE RADIUS</option>
+                                                    <option value="5" selected> 5km</option>
+                                                    <option value="10" selected> 10km</option>
+                                                    <option value="15" selected> 15km</option>
+                                                    <option value="20" selected> 20km</option>
+                                                    <option value="25" selected> 25km</option>
+                                                    <option value="50" selected> 50km</option>
+                                                    <option value="100" selected> 100km</option>
+                                                    <option value="200" selected> 200km</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                <div className="field-holder">
+                                                    <input type="submit" value="Search"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
+
                         </div>
                     </div>
                 </div>
-                {/*    end latest products */}
-                {/*popular categories */}
-                <h2 className="mb-5 text-primary">Popular Categories <a href='#'
-                                                                        className="float-end btn btn-sm btn-danger text-white ">
-                    See Full List of Categories <i className="fa-solid fa-arrow-right-long"></i></a></h2>
-                <div className="row mb-4 ">
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Category Title</h4>
+                {/*// <!-- Main Search End -->*/}
+                {/*//*/}
+                {/*// // <!-- Top Restarurants Section Start -->*/}
+                <div className="page-section nopadding cs-nomargin"
+                     style={{
+                         marginTop: '0px',
+                         paddingTop: '60px',
+                         paddingBottom: '0px',
+                         marginBottom: '0px',
+                         background: '#ffffff'
+                     }}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div className="element-title align-left">
+                                    <h2>Top Restaurants</h2>
+                                    <p>Explore restaurants, bars, and cafés by locality</p>
+                                </div>
                             </div>
-                            <div className="card-footer">
-                                Product sells : 244857
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                 style={{
+                                     paddingLeft: '0 !important',
+                                     paddingRight: '0 !important'
+                                 }}>
+                                <div>
+                                    <ul>
+                                        {vendors.map((vendor) => (
+                                            <li key={vendor.id} className="has-border">
+                                                <figure>
+                                                    <a href="#">
+                                                        <img
+                                                            src={vendor.restaurant_picture}
+                                                            className="attachment-full size-full wp-post-image"
+                                                            alt=""
+                                                        />
+                                                    </a>
+                                                </figure>
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    {nextPage && (
+                                        <button onClick={() => fetchNextPage(nextPage)}>Load More</button>
+                                    )}
+                                </div>
+                                <div className="company-logo">
+                                    {/*<ul>*/}
+                                    {/*    {% if vendors %}*/}
+                                    {/*    {% for vendor in vendors %}*/}
+                                    {/*    <li className="has-border">*/}
+                                    {/*        <figure>*/}
+                                    {/*            {% if vendor.user_profile.profile_picture %}*/}
+                                    {/*            <a href="{% url 'restaurant-dashboard' %}"><img*/}
+                                    {/*                src="{{ vendor.user_profile.profile_picture.url }}"*/}
+                                    {/*                className="attachment-full size-full wp-post-image"*/}
+                                    {/*                alt=""></a>*/}
+                                    {/*            {% else %}*/}
+                                    {/*            <li className="has-border">*/}
+                                    {/*                <figure>*/}
+                                    {/*                    <a href="{% url 'homepage' %}"><img*/}
+                                    {/*                        src="{% static 'extra-images/listing-logo18.png' %}"*/}
+                                    {/*                        className="attachment-full size-full wp-post-image"*/}
+                                    {/*                        alt=""></a>*/}
+                                    {/*                </figure>*/}
+                                    {/*            </li>*/}
+                                    {/*            {% endif %}*/}
+                                    {/*        </figure>*/}
+                                    {/*    </li>*/}
+                                    {/*    {% endfor %}*/}
+                                    {/*    {% else %}*/}
+                                    {/*    <li className="has-border">*/}
+                                    {/*        <figure>*/}
+                                    {/*            <a href="#"><img src="{% static 'extra-images/listing-logo18.png' %}"*/}
+                                    {/*                             className="attachment-full size-full wp-post-image"*/}
+                                    {/*                             alt=""></a>*/}
+                                    {/*        </figure>*/}
+                                    {/*    </li>*/}
+                                    {/*    <li className="has-border">*/}
+                                    {/*        <figure>*/}
+                                    {/*            <a href="#"><img src="{% static 'extra-images/fb-restaurant-02.jpg' %}"*/}
+                                    {/*                             className="attachment-full size-full wp-post-image"*/}
+                                    {/*                             alt=""></a>*/}
+                                    {/*        </figure>*/}
+                                    {/*    </li>*/}
+                                    {/*    <li className="has-border">*/}
+                                    {/*        <figure>*/}
+                                    {/*            <a href="#"><img src="{% static 'extra-images/fb-restaurant-02.jpg' %}"*/}
+                                    {/*                             className="attachment-full size-full wp-post-image"*/}
+                                    {/*                             alt=""></a>*/}
+                                    {/*        </figure>*/}
+                                    {/*    </li>*/}
+                                    {/*    {% endif %}*/}
+                                    {/*</ul>*/}
+                                </div>
                             </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Category Title</h4>
-                            </div>
-                            <div className="card-footer">
-                                Product sells : 244857
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Category Title</h4>
-                            </div>
-                            <div className="card-footer">
-                                Product sells : 244857
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Category Title</h4>
-                            </div>
-                            <div className="card-footer">
-                                Product sells : 244857
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-                {/*    end popular categories */}
-                {/*Popular Products section*/}
-                <h2 className="mb-5 text-info">Popular Products <a href='#'
-                                                                   className="float-end btn btn-sm btn-danger text-white ">
-                    See Full List Products <i className="fa-solid fa-arrow-right-long"></i></a></h2>
-                <div className="row mb-4">
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Product Title</h4>
-                                <h5 className="card-body text-muted">Price: 300 hezar toman</h5>
-                            </div>
-                            <div className="card-footer">
-                                <button title="Add to Cart" className="btn btn-success btn-sm">
-                                    <i className="fa-solid fa-cart-plus"></i>
-                                </button>
-                                <button title="Add to Wishlist" className="btn btn-danger btn-sm ms-1">
-                                    <i className="fa fa-heart"></i>
-                                </button>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
                 </div>
-                {/*    end Popular Product */}
-                {/*popular Sellers */}
-                <h2 className="mb-5 text-success">Popular Sellers <a href='#'
-                                                                     className="float-end btn btn-sm btn-danger text-white ">
-                    See Full List of Sellers <i className="fa-solid fa-arrow-right-long"></i></a></h2>
-                <div className="row mb-4 ">
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Seller Name</h4>
+                {/*// <!-- Top Restarurants Section End -->*/}
+                {/*// <!-- Choose From Most Popular Listin Start -->*/}
+                <div className="page-section nopadding cs-nomargin"
+                     style={{
+                         marginTop: '0px',
+                         paddingTop: '60px',
+                         paddingBottom: '50px',
+                         marginBottom: '0px',
+                         background: '#ffffff'
+                     }}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div className="element-title align-center">
+                                    <h2>Choose From Most Popular Restaurants</h2>
+                                    <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+                                </div>
                             </div>
-                            <div className="card-footer">
-                                Categories : <a href="#">polo morgh</a>, <a href="#">polo khuresht</a>
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div className="listing fancy">
+                                    <ul className="row">
+                                        {/*{% if vendors %}*/}
+                                        {/*{% for vendor in vendors %}*/}
+                                        <li className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div className="list-post featured">
+                                                <div className="img-holder">
+                                                    <figure><a href="#">
+                                                        <figure><a href="#">
+                                                            {/*{% if vendor.user_profile.profile_picture %}*/}
+
+                                                            {/*<img*/}
+                                                            {/*    src="{{ vendor.user_profile.profile_picture.url }}"*/}
+                                                            {/*    className="img-thumb wp-post-image" alt="">*/}
+                                                            {/*    <img*/}
+                                                            {/*        src="{% static 'extra-images/listing-logo18.png' %}"*/}
+                                                            {/*        className="attachment-full size-full wp-post-image"*/}
+                                                            {/*        alt="profile pic">*/}
+                                                            {/*        {% endif %}*/}
+                                                        </a>
+                                                        </figure>
+                                                    </a>
+                                                    </figure>
+                                                    <span className="restaurant-status close">
+													<em className="bookmarkRibbon"></em>Close
+												</span>
+                                                </div>
+                                                <div className="text-holder">
+                                                    <div className="post-title">
+                                                        <h5>
+                                                            <a href="listing-detail.html">Vendor</a>
+                                                        </h5>
+                                                    </div>
+                                                    {/*{% if vendor.user_profile.city and vendor.user_profile.state %}*/}
+                                                    {/*<address><span>address</span>*/}
+                                                    {/*    {{vendor.user_profile.city}},{{vendor.user_profile.state}}*/}
+                                                    {/*</address>*/}
+                                                    {/*{% endif %}*/}
+                                                </div>
+
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Seller Name</h4>
-                            </div>
-                            <div className="card-footer">
-                                Categories : <a href="#">polo morgh</a>, <a href="#">polo khuresht</a>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Seller Name</h4>
-                            </div>
-                            <div className="card-footer">
-                                Categories : <a href="#">polo morgh</a>, <a href="#">polo khuresht</a>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-3 mb-4">
-                        <div className="card">
-                            <img className="card-img-top" src={logo} alt="Card image cap"/>
-                            <div className="card-body">
-                                <h4 className="card-title">Seller Name</h4>
-                            </div>
-                            <div className="card-footer">
-                                Categories : <a href="#">polo morgh</a>, <a href="#">polo khuresht</a>
-                            </div>
-                            <a href="#" className="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
                 </div>
-                {/*    end popular Sellers */}
-                {/*  rating  */}
-                <div id="carouselExampleIndicators"
-                     className="carousel slide my-4 border bg-dark text-white p-5"
-                     data-bs-ride="carousel">
-                    <div className="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                className="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                                aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                                aria-label="Slide 3"></button>
-                    </div>
-                    <div className="carousel-inner">
-                        <div className="carousel-item active">
-                            <figure className="text-center">
-                                <blockquote className="blockquote">
-                                    <p>A well-known quote, contained in a blockquote element.</p>
-                                </blockquote>
-                                <figcaption className="blockquote-footer">
-                                    <i className="fa fa-star text-warning"></i> <cite title="Source Title">Customer
-                                    Name</cite>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <div className="carousel-item" id="mmd">
-                            <figure className="text-center">
-                                <blockquote className="blockquote">
-                                    <p>A well-known quote, contained in a blockquote element.</p>
-                                </blockquote>
-                                <figcaption className="blockquote-footer">
-                                    <i className="fa fa-star"></i> <cite title="Source Title">Customer
-                                    Name</cite>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <div className="carousel-item">
-                            <figure className="text-center">
-                                <blockquote className="blockquote">
-                                    <p>A well-known quote, contained in a blockquote element.</p>
-                                </blockquote>
-                                <figcaption className="blockquote-footer">
-                                    <i className="fa fa-star"></i> <cite title="Source Title">Customer
-                                    Name</cite>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <button className="carousel-control-prev" type="button"
-                            data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Previous</span>
-                    </button>
-                    <button className="carousel-control-next" type="button"
-                            data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Next</span>
-                    </button>
-                </div>
-                {/*  ratings end  */}
+                {/*// <!-- Choose From Most Popular Listing End -->*/}
+
+                {/*// <!-- Home Pages Elements End  -->*/}
             </div>
+            {/*// <!-- Main Section End -->*/}
+            {/*// <!-- Modal Popup End -->*/}
         </main>
     )
 }
