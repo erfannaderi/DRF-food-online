@@ -8,7 +8,7 @@ from main.models import BaseModel
 
 
 # Create your models here.
-class Vendor(BaseModel):
+class Vendor(models.Model):
     user = models.OneToOneField(User, related_name='user', on_delete=models.CASCADE)
     # user_profile = models.OneToOneField(UserProfile, related_name='user_profile', on_delete=models.CASCADE)
     vendor_name = models.CharField(max_length=50)
@@ -51,29 +51,8 @@ class Vendor(BaseModel):
         # print("Is open:", is_open)
         return is_open
 
-    def save(self, *args, **kwargs):
-        if self.pk is not None:
-            # update
-            orig = Vendor.objects.get(pk=self.pk)
-            if orig.is_approved != self.is_approved:
-                email_template = 'accounts/emails/admin_approval_email.html'
-                context = {
-                    'user': self.user,
-                    'is_approved': self.is_approved
-                }
-                if self.is_approved:
-                    # send email notification
-                    mail_subject = "Your Restaurant is approved you are ready to roll"
-                    send_notification(mail_subject, email_template, context)
-                else:
-                    # send notification email
-                    mail_subject = "Sorry we are unable to work with your restaurant at this time"
 
-                    send_notification(mail_subject, email_template, context)
-        return super(Vendor, self).save(*args, **kwargs)
-
-
-class OpeningHours(BaseModel):
+class OpeningHours(models.Model):
     days = [
         (1, 'saturday'),
         (2, 'sunday'),

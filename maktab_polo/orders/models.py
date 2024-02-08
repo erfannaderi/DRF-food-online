@@ -8,7 +8,7 @@ from vendor.models import Vendor
 # Create your models here.
 
 
-class Payment(BaseModel):
+class Payment(models.Model):
     PAYMENT_METHOD = (
         ('PayPal', 'PayPal'),
         ('zarinpal', 'zarinpal'),
@@ -25,7 +25,7 @@ class Payment(BaseModel):
         return self.transaction_id
 
 
-class Order(BaseModel):
+class Order(models.Model):
     STATUS = (
         ('New', 'New'),
         ('Accepted', 'Accepted'),
@@ -67,7 +67,7 @@ class Order(BaseModel):
         return self.order_number
 
 
-class OrderedFood(BaseModel):
+class OrderedFood(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
