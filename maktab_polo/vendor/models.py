@@ -3,7 +3,7 @@ from datetime import time, datetime, date
 from django.db import models
 
 from accounts.models import User
-from accounts.utils import send_notification
+# from accounts.utils import send_notification
 from main.models import BaseModel
 
 

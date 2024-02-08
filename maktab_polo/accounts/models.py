@@ -109,25 +109,6 @@ class User(AbstractBaseUser, PermissionsMixin):
             return 'UNKNOWN'
 
 
-# class UserProfile(models.Model):
-#     user = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-#     profile_picture = models.ImageField(upload_to='user/profile_picture', blank=True, null=True)
-#     cover_photos = models.ImageField(upload_to='user/cover_photos', blank=True, null=True)
-#     address = models.CharField(max_length=250, blank=True, null=True)
-#     address2 = models.CharField(max_length=250, blank=True, null=True)
-#     country = models.CharField(max_length=20, blank=True, null=True)
-#     state = models.CharField(max_length=20, blank=True, null=True)
-#     city = models.CharField(max_length=20, blank=True, null=True)
-#     pin_code = models.CharField(max_length=70, blank=True, null=True)
-#     latitude = models.CharField(max_length=20, blank=True, null=True)
-#     longitude = models.CharField(max_length=20, blank=True, null=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     modified_at = models.DateTimeField(auto_now_add=True)
-#
-#     def __str__(self):
-#         return self.user.email
-
-
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=250, blank=True, null=True)

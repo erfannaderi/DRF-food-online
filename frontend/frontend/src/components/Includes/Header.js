@@ -116,6 +116,7 @@ function Header() {
                                 </div>
                             </div>
                             <Link to='/Account/ClientDashboard'>go to dash board</Link>
+                            <Link to='/category'>go to Categories</Link>
                         </div>
                     </div>
                 </div>

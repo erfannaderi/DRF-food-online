@@ -1,18 +1,32 @@
 import logo from "../foodOnlineLogo.png";
 import Cart from "./marketplace/Cart";
+// this below is for hooks if you use functional components if classes use life cycle hooks ig but so far we're doing func
+import {useState, useEffect} from "react";
 
 function Home() {
-    async function logMovies() {
-        const response = await fetch("http://example.com/movies.json");
-        const movies = await response.json();
-        console.log(movies);
-    }
+
 
     const products = [
         {'title': 'python', 'price': 200},
         {'title': 'Django', 'price': 200},
         {'title': 'Flask', 'price': 230},
     ];
+    const [Products, setProducts] = useState([])
+    useEffect(() => {
+            fetchData('http://127.0.0.1:8000/API/Menu/Categories/');
+        }
+    )
+
+    async function fetchData(baseurl) {
+        async function logMovies() {
+            const response = await fetch(baseurl);
+            const movies = await response.json()
+                .then((movies) => setProducts(movies.results));
+        }
+    };
+
+    // logMovies()
+
     return (
         <main className="mt-4">
             <div className="container">

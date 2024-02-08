@@ -5,6 +5,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Includes/Header';
 import Home from './components/Home';
+import Category from './components/Category';
 import Footer from './components/Includes/Footer';
 import Listing from './components/marketplace/Listing';
 import Detail from './components/marketplace/Detail';
@@ -18,6 +19,7 @@ function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/category" element={<Category />} />
                 <Route path="/Account/RegisterClient" element={<RegisterClient />} />
                 <Route path="/Account/Login" element={<Login />} />
                 <Route path="/Account/ClientDashboard" element={<ClientDashboard />} />

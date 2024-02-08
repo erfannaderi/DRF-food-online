@@ -3,24 +3,24 @@
 # from main.models import  Product, Customer, Order, OrderItem, CustomerAddress, ProductRatting, ProductCategory
 #
 #
-# # class VendorListSerializer(serializers.ModelSerializer):
-# #     class Meta:
-# #         model = Vendor
-# #         fields = ['id', 'user', 'address']
-# #
-# #     def __init__(self, *args, **kwargs):
-# #         super(VendorListSerializer, self).__init__(*args, **kwargs)
-# #         # self.Meta.depth = 1
-# #
-# #
-# # class VendorDetailSerializer(serializers.ModelSerializer):
-# #     class Meta:
-# #         model = Vendor
-# #         fields = ['id', 'user', 'address']
-# #
-# #     def __init__(self, *args, **kwargs):
-# #         super(VendorDetailSerializer, self).__init__(*args, **kwargs)
-# #         self.Meta.depth = 1
+# class VendorListSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Vendor
+#         fields = ['id', 'user', 'address']
+#
+#     def __init__(self, *args, **kwargs):
+#         super(VendorListSerializer, self).__init__(*args, **kwargs)
+#         # self.Meta.depth = 1
+#
+#
+# class VendorDetailSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Vendor
+#         fields = ['id', 'user', 'address']
+#
+#     def __init__(self, *args, **kwargs):
+#         super(VendorDetailSerializer, self).__init__(*args, **kwargs)
+#         self.Meta.depth = 1
 #
 #
 # class ProductListSerializer(serializers.ModelSerializer):
