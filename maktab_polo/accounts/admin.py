@@ -1,5 +1,3 @@
-from django.contrib import admin
-
 # Register your models here.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -19,12 +17,23 @@ admin.site.register(User, CustomUserAdmin)
 
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('address', 'country', 'state', 'city')
+    fieldsets = (
+        ("user", {'fields': ('user',)}
+         ),
+        ("user's address", {'fields': ('address', 'country', 'state', 'city')}
+         ),
+        ("user's technical address info", {'fields': ('pin_code', 'latitude', 'longitude')}),
+    )
 
 
 admin.site.register(Address, AddressAdmin)
 
-# @admin.register(UserProfile)
-# class UserProfileAdmin(admin.ModelAdmin):
-#     # Define the fields to be displayed in the admin interface
-#     # list_display = ('user', 'date_of_birth', 'phone_number', 'address')
-#     pass
+
+class AddressAdminSite(admin.AdminSite):
+    site_header = 'Addresses Administration'
+
+
+address_admin_site = AddressAdminSite(name='address_admin')
+
+# Register your Address model with the custom admin site
+address_admin_site.register(Address)

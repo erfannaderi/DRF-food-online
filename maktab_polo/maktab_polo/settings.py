@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'drf_spectacular',
     'main',
     'accounts',
     'vendor',
@@ -46,6 +49,10 @@ INSTALLED_APPS = [
     'market_place',
     'orders',
 ]
+
+#  admin customization
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -113,12 +120,18 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
-
+LANGUAGES = (
+    ('fa', 'Persian'),
+    ('en', 'English'),
+)
+DEFAULT_LANGUAGE = 2
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -142,20 +155,41 @@ REST_FRAMEWORK = {
     # ],
     'DEFAULT_PAGINATION_CLASS': 'main.pagination.CustomPagination',
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination', # default
-    'PAGE_SIZE': 1
+    'PAGE_SIZE': 1,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'DRF_foodonline',  # .\manage.py spectacular --file schema.yml
 }
 CORS_ALLOW_ALL_ORIGINS = True
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
-        # "OPTIONS": {
-        #     "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        # }
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         },
+#         "admin_interface": {
+#             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+#             "TIMEOUT": 60 * 5,
+#         },
+#     }
+# }
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Define the MEDIA_URL setting
 MEDIA_URL = '/media/'
+
+#  django admin custom look
+# DJANGO THEME (DEFAULT):
+# Run python manage.py loaddata admin_interface_theme_django.json
+#
+# BOOTSTRAP THEME:
+# Run python manage.py loaddata admin_interface_theme_bootstrap.json
+#
+# FOUNDATION THEME:
+# Run python manage.py loaddata admin_interface_theme_foundation.json
+#
+# U.S. WEB DESIGN STANDARDS THEME:
+# Run python manage.py loaddata admin_interface_theme_uswds.json

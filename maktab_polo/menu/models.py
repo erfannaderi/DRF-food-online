@@ -69,7 +69,6 @@ class ProductRatting(models.Model):
     product = models.ForeignKey(FoodItem, on_delete=models.CASCADE, related_name='product_ratings')
     ratings = models.IntegerField()
     reviews = models.TextField(blank=True, null=True)
-    add_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.ratings} - {self.reviews}'

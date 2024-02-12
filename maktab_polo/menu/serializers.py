@@ -35,7 +35,7 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
 class ProductRattingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductRatting
-        fields = ('id', 'customer', 'product', 'ratings', 'reviews', 'add_time')
+        fields = ('id', 'customer', 'product', 'ratings', 'reviews')
 
     def __init__(self, *args, **kwargs):
         super(ProductRattingSerializer, self).__init__(*args, **kwargs)

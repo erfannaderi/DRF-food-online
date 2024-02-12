@@ -4,8 +4,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from .serializers import LoginSerializer
-from .serializers import RegistrationSerialize
+from .serializers import LoginSerializer, RegistrationSerializer
 
 
 class RegistrationView(APIView):

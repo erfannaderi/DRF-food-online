@@ -19,9 +19,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView  # jwt views
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+from accounts.admin import address_admin_site
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('address_admin/', address_admin_site.urls),
+    # swagger api
+    path('API/Schema/', SpectacularAPIView.as_view(), name='Schema'),
+    path('API/Schema/Docs', SpectacularSwaggerView.as_view(url_name='Schema')),
     # path('api/', include('main.urls')),
     path('API/Menu/', include('menu.urls')),
     path('API/', include('accounts.urls')),
@@ -36,3 +43,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+admin.site.index_title = "food-online"
+admin.site.site_header = "Food Online Admin"
+admin.site.site_title = "Food Online Admin Panel"
