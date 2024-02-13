@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'maktab_polo.urls'
@@ -162,34 +163,32 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'DRF_foodonline',  # .\manage.py spectacular --file schema.yml
 }
 CORS_ALLOW_ALL_ORIGINS = True
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-#         "LOCATION": "redis://127.0.0.1:6379",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         },
-#         "admin_interface": {
-#             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-#             "TIMEOUT": 60 * 5,
-#         },
-#     }
-# }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            # "SOCKET_CONNECT_TIMEOUT": 30 * 60,
+            # "SOCKET_TIMEOUT": 30 * 60,
+        },
+        "admin_interface": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "TIMEOUT": 60 * 5,
+        },
+    }
+}
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Define the MEDIA_URL setting
 MEDIA_URL = '/media/'
 
-#  django admin custom look
-# DJANGO THEME (DEFAULT):
-# Run python manage.py loaddata admin_interface_theme_django.json
-#
-# BOOTSTRAP THEME:
-# Run python manage.py loaddata admin_interface_theme_bootstrap.json
-#
-# FOUNDATION THEME:
-# Run python manage.py loaddata admin_interface_theme_foundation.json
-#
-# U.S. WEB DESIGN STANDARDS THEME:
-# Run python manage.py loaddata admin_interface_theme_uswds.json
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+# DEFAULT_PAGINATION_CLASS = 'main.pagination.CustomPagination'
+
+# redis wsl
+# $ sudo service redis start
+# $ telnet 127.0.0.1 6379 # to test connection to redis $ quit to exit it

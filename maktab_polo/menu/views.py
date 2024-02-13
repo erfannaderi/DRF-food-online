@@ -1,24 +1,14 @@
-# from django.shortcuts import render
-# from rest_framework import permissions, pagination
-# from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema
 from rest_framework import filters
-# from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-# from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
+from main.pagination import CustomPagination
 from menu.models import Category, ProductRatting, FoodItem, RawItem
 from menu.serializers import CategoryListSerializer, CategoryDetailSerializer, ProductRattingSerializer, \
     FoodItemSerializer, RawItemSerializer
-
-
-# Create your views here.
-
-# class FoodItemPagination(PageNumberPagination):
-#     page_size = 1
-#     page_size_query_param = 'page_size'
-#     max_page_size = 1
 
 
 @extend_schema(responses=CategoryListSerializer)
@@ -27,14 +17,12 @@ class CategoryList(ListCreateAPIView):
     serializer_class = CategoryListSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['category_name', 'description', 'slug', 'vendor']
-    # permission_classes = [permissions.IsAuthenticated]
 
 
 @extend_schema(responses=CategoryDetailSerializer)
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryDetailSerializer
-    # pagination_class = FoodItemPagination
 
 
 @extend_schema(responses=ProductRattingSerializer)
@@ -43,12 +31,39 @@ class ProductRattingViewSet(ModelViewSet):
     serializer_class = ProductRattingSerializer
 
 
+# class FoodItemPagination(PageNumberPagination):
+#     page_size = 1
+#     page_size_query_param = 'page_size'
+#     max_page_size = 100
+
+
 @extend_schema(responses=FoodItemSerializer)
 class FoodItemViewSet(ModelViewSet):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'vendor']
+
+    def list(self, request, *args, **kwargs):
+        cached_data = cache.get('food_items')  # Check if data is in cache
+
+        if cached_data:
+            return Response(cached_data)
+
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            response = self.get_paginated_response(serializer.data)
+
+            # Cache the paginated data for future requests
+            cache.set('food_items', response.data, timeout=60 * 60)  # Cache for 1 hour
+
+            return response
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 @extend_schema(responses=RawItemSerializer)
