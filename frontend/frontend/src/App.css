@@ -1,38 +1,182 @@
-.App {
-  text-align: center;
+.custom-card {
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.custom-card:hover {
+    transform: translateY(-10px) rotate(5deg); /* Move the card up and rotate slightly on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Add a shadow effect with more depth */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.custom-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1); /* Add a semi-transparent overlay */
+    transition: opacity 0.3s;
+    pointer-events: none; /* Allow mouse events to pass through the overlay */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.custom-card:hover::before {
+    opacity: 0.5; /* Make the overlay slightly visible on hover */
 }
 
-.App-link {
-  color: #61dafb;
+hr {
+    border: none;
+    height: 30px;
+    background: linear-gradient(to bottom right, #56ea0d, #abff00); /* Diamond gradient from top left to bottom right */
+    border: 1px solid rebeccapurple; /* Green border color */
+    box-shadow: inset 0 1px 0 rebeccapurple; /* Inset shadow effect */
+    -webkit-box-shadow: inset 0 1px 0 rebeccapurple;
+    -moz-box-shadow: inset 0 1px 0 rebeccapurple;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.food-checkout {
+    background: linear-gradient(to bottom right, #56ea0d, #3e5909); /* Diamond gradient from top left to bottom right */
+    color: rebeccapurple;
+}
+
+.food-checkout {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.img-checkout {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.number_checkout, .product-checkout, .price-checkout {
+    background: linear-gradient(-45deg, #56ea0d, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+/* Login registration card styles */
+.custom-card-accounts {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-header-accounts {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px 8px 0 0;
+}
+
+.custom-input-accounts {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.custom-input-accounts:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.custom-button-accounts {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.custom-button-accounts:hover {
+    background-color: #8000b3;
+}
+
+#profile-user {
+    --fa-primary-color: #3700ff;
+    --fa-secondary-color: #2b00ff;
+    margin-right: 2px;
+}
+
+/*@keyframes walk {*/
+/*    0% { transform: translateX(0); }*/
+/*    50% { transform: translateX(-20px); }*/
+/*    100% { transform: translateX(0); }*/
+/*}*/
+
+/*.trex-icon {*/
+/*    animation: leg-walk 1s infinite; !* Adjust duration and iteration as needed *!*/
+/*}*/
+
+
+/* CSS */
+@keyframes leg-walk {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    50% {
+        transform: rotate(20deg);
+    }
+    /* Adjust angle and timing as needed */
+}
+
+/*.trex-icon {*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*}*/
+
+/*.trex-icon::before, .trex-icon::after {*/
+/*    !*content: ' '; !* Pseudo-elements for the legs *!*!*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    !*width: 10px; !* Adjust size as needed *!*!*/
+/*    !*height: 30px; !* Adjust size as needed *!*!*/
+/*    !*background-color: #333; !* Color of the legs *!*!*/
+/*    animation: leg-walk 1s infinite alternate; !* Adjust duration and iteration as needed *!*/
+/*}*/
+
+/*.trex-icon::before {*/
+/*    left: 10px; !* Adjust position of the first leg *!*/
+/*}*/
+
+/*.trex-icon::after {*/
+/*    right: 10px; !* Adjust position of the second leg *!*/
+/*}*/
+
+
+@keyframes walk {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(20px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.r2d2-icon {
+    animation: walk 3s infinite; /* Adjust duration and iteration count as needed */
 }

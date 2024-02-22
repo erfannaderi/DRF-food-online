@@ -1,11 +1,12 @@
 # Register your models here.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+
 from accounts.models import User, Address
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'is_active', 'first_name', 'last_name')
+    list_display = ('username', 'email', 'is_active', 'first_name', 'last_name', 'otp')
     ordering = ('-created_date',)
     filter_horizontal = ()
     list_filter = ()

@@ -163,6 +163,7 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'DRF_foodonline',  # .\manage.py spectacular --file schema.yml
 }
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
 CACHES = {
     "default": {
@@ -192,3 +193,18 @@ SESSION_CACHE_ALIAS = "default"
 # redis wsl
 # $ sudo service redis start
 # $ telnet 127.0.0.1 6379 # to test connection to redis $ quit to exit it
+
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # or 'optional'
+# ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+# email configurations
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE = config('EMAIL_USE', default=True, cast=bool)
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+# EMAIL_USE_TLS = config('EMAIL_USE', cast=bool)
+DEFAULT_EMAIL = "Online Food <django.erfan@gmail.com>"
+
+GOOGLE_API_KEY = config('GOOGLE_API_KEY')

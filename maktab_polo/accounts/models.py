@@ -1,8 +1,11 @@
 # Create your models here.
-from django.utils.translation import gettext_lazy as _
+from datetime import timedelta
+
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, PermissionsMixin, Group, Permission
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin, Group, Permission
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
@@ -73,6 +76,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=60)
     username = models.CharField(max_length=40, unique=True)
     email = models.CharField(max_length=100, unique=True)
+    otp = models.CharField(max_length=6, null=True, blank=True)
+    token_valid_from = models.DateTimeField(default=timezone.now())
+    token_valid_until = models.DateTimeField(default=timezone.now() + timedelta(seconds=300))
+    # forgot_password_token = models.CharField(max_length=200, null=True, blank=True)
+    # is_email_verified =  models.BooleanField(default=False)
+    # is_phone_number_verified = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=14, blank=True)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='media/user/profile_picture', blank=True, null=True)
@@ -88,7 +97,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = []
     objects = UserManager()
 
     def __str__(self) -> str:
@@ -123,3 +132,13 @@ class Address(models.Model):
 
     def __str__(self):
         return self.address
+#
+# class ForgotPassword(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     forgot_password_token = models.CharField(max_length=200, null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     modified_at = models.DateTimeField(auto_now=True)
+#
+#     def __str__(self):
+#         return self.user.email
+
