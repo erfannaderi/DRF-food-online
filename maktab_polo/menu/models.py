@@ -11,6 +11,7 @@ class Category(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     category_name = models.CharField(max_length=50, verbose_name=_('Category Name'))
     description = models.TextField(max_length=250, blank=True, verbose_name=_('Description'))
+    image = models.ImageField(upload_to='media/category_images', null=True, blank=True)
     slug = models.SlugField(max_length=100, unique=True)
     parent_category = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True,
                                         related_name='child_categories')

@@ -1,4 +1,4 @@
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import React, {useState} from 'react';
 import {
     MDBContainer,
@@ -9,7 +9,6 @@ import {
     MDBNavbarNav,
     MDBNavbarItem,
     MDBNavbarLink,
-    MDBBtn,
     MDBDropdown,
     MDBDropdownToggle,
     MDBDropdownMenu,
@@ -21,14 +20,22 @@ export default function App() {
     const [openBasic, setOpenBasic] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const location = useLocation();
-
-    const handleHover = () => {
+    const handleCustomerAccountHover = () => {
         setIsHovered(true);
     };
 
-    const handleMouseLeave = () => {
+    const handleCustomerAccountMouseLeave = () => {
         setIsHovered(false);
     };
+
+    const handleSellerPanelHover = () => {
+        setIsHovered(true);
+    };
+
+    const handleSellerPanelMouseLeave = () => {
+        setIsHovered(false);
+    };
+
 
     const isActive = (path) => {
         return location.pathname === path;
@@ -38,37 +45,42 @@ export default function App() {
         <MDBNavbar expand='lg' light bgColor='success'>
             <MDBContainer fluid>
                 <MDBNavbarBrand href='/'>
-                    <MDBIcon> <i className="fa-sharp fa-solid fa-pot-food fa-beat fa-2xl"
-                        style={{color: "#63E6EB", marginRight: "3px"}}></i> </MDBIcon>
-                Maktab Polo</MDBNavbarBrand>
+                    <MDBIcon><i className="fa-sharp fa-solid fa-pot-food fa-beat fa-2xl" style={{ color: "#63E6EB", marginRight: "3px" }}></i></MDBIcon>
+                    Maktab Polo
+                </MDBNavbarBrand>
 
-            <MDBNavbarToggler
+                <MDBNavbarToggler
                     aria-controls='navbarSupportedContent'
                     aria-expanded='false'
                     aria-label='Toggle navigation'
                     onClick={() => setOpenBasic(!openBasic)}
                 >
-                    <MDBIcon icon='bars' fas/>
+                    <MDBIcon icon='bars' fas />
                 </MDBNavbarToggler>
 
-                <MDBCollapse navbar open={openBasic} className='d-flex input-group w-auto'>
+                <MDBCollapse navbar open={openBasic} className='justify-content-end'>
                     <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
                         <MDBNavbarItem>
                             <MDBNavbarLink active={isActive('/')} href='/'>
                                 Home
                             </MDBNavbarLink>
                         </MDBNavbarItem>
-                        <MDBNavbarItem>
+                        <MDBNavbarItem style={{marginRight: '35rem'}}>
                             <MDBNavbarLink href='/categories'>Categories</MDBNavbarLink>
                         </MDBNavbarItem>
-                        <MDBNavbarLink href='/checkout'>My Cart (5)</MDBNavbarLink>
-                        <MDBNavbarItem
-                            onMouseEnter={handleHover}
-                            onMouseLeave={handleMouseLeave}
-                        >
+                        <MDBNavbarLink href='/checkout' style={{marginRight: "5px"}}>
+                            My Cart <i className="fa-duotone fa-cart-plus"></i>
+                            <span className="cart-count">5</span>
+                        </MDBNavbarLink>
+                        <MDBNavbarLink href='/checkout' style={{marginRight: "5px"}}>
+                            New Orders <i className="fa-duotone fa-cart-plus"></i>
+                            <span className="cart-count">5</span>
+                        </MDBNavbarLink>
+                        <MDBNavbarItem  id="customer-accounts"
+                            onMouseEnter={handleCustomerAccountHover} onMouseLeave={handleCustomerAccountMouseLeave}>
                             <MDBDropdown>
-                                <MDBDropdownToggle tag='a' className='nav-link' role='button'>
-                                    Account
+                                <MDBDropdownToggle tag='a' className='nav-link' role='button' style={{marginRight:"2rem"}}>
+                                    Customer Account
                                     {isHovered ? <MDBIcon icon='user-circle' className='ms-1' fas/> : null}
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu>
@@ -88,8 +100,8 @@ export default function App() {
                                                      fas/> : null}
                                         Register
                                     </MDBDropdownItem>
-                                    <MDBDropdownItem link href='/login'>
-                                        {isActive('/login') ?
+                                    <MDBDropdownItem link href='/customer/login'>
+                                        {isActive('/customer/login') ?
                                             <MDBIcon> <i
                                                 className="fa-sharp fa-light fa-right-to-bracket fa-beat"
                                                 style={{color: "#5cb85c", marginRight: "3px"}}></i> </MDBIcon> :
@@ -104,6 +116,49 @@ export default function App() {
                                     <MDBDropdownItem className='dropdown-divider'></MDBDropdownItem>
                                     <MDBDropdownItem link href='/customer/dashboard'>Dashboard</MDBDropdownItem>
                                     <MDBDropdownItem link href='/customer/logout'>Logout</MDBDropdownItem>
+                                </MDBDropdownMenu>
+                            </MDBDropdown>
+                        </MDBNavbarItem>
+                        <MDBNavbarItem id='seller-accounts' onMouseEnter={handleSellerPanelHover} onMouseLeave={handleSellerPanelMouseLeave}>
+                            <MDBDropdown>
+                                <MDBDropdownToggle tag='a' className='nav-link' role='button'>
+                                    Seller Panel
+                                    {isHovered ? <MDBIcon icon='truck-utensils' className='ms-1 r2d2-icon' fas
+                                                          style={{color: "#f5f5f5", marginRight: "3px"}}/> : null}
+                                </MDBDropdownToggle>
+                                <MDBDropdownMenu>
+                                    <MDBDropdownItem link href='/seller/register'>
+                                        {isActive('/seller/register') ?
+                                            <MDBIcon> <i
+                                                className="fa-sharp fa-regular fa-id-card fa-bounce fa-2x"
+                                                style={{color: "#5cb85c", marginRight: "3px"}}></i></MDBIcon> :
+                                            <MDBIcon icon='money-bill-trend-up'
+                                                     style={{
+                                                         color: "#5cb85c",
+                                                         marginRight: "3px"
+                                                     }}
+                                                     fas/>}
+                                        {isActive('/') ?
+                                            <MDBIcon icon='user-plus' style={{color: "#5cb85c", marginRight: "3px"}}
+                                                     fas/> : null}
+                                        Register
+                                    </MDBDropdownItem>
+                                    <MDBDropdownItem link href='/seller/login'>
+                                        {isActive('/seller/login') ?
+                                            <MDBIcon> <i
+                                                className="fa-sharp fa-light fa-right-to-bracket fa-beat"
+                                                style={{color: "#5cb85c", marginRight: "3px"}}></i> </MDBIcon> :
+                                            <MDBIcon className='ms-1' fas> <i
+                                                className="fa-sharp fa-light fa-right-to-bracket "
+                                                style={{color: "#5cb85c", marginRight: "3px"}}></i> </MDBIcon>}
+                                        {isActive('/seller/register') ?
+                                            <MDBIcon icon='user-plus' style={{color: "#5cb85c", marginRight: "3px"}}
+                                                     fas/> : null}
+                                        Login
+                                    </MDBDropdownItem>
+                                    <MDBDropdownItem className='dropdown-divider'></MDBDropdownItem>
+                                    <MDBDropdownItem link href='/seller/dashboard'>Dashboard</MDBDropdownItem>
+                                    <MDBDropdownItem link href='/seller/logout'>Logout</MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavbarItem>

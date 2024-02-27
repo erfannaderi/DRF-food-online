@@ -1,11 +1,33 @@
 //packages
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {Link, useParams} from "react-router-dom";
 //assets
 import logo from "../../logo.jpg";
 import '../../App.css';
-import {Link} from "react-router-dom";
 
 export default function ProductDetail(props) {
+    const {product_id} = useParams()
+    const  baseUrl='http://127.0.0.1:8000/API/Menu'
+    const [ProductData, setProductsData] = useState([]);
+    useEffect(() => {
+        fetchData(baseUrl+'/fooditems/'+product_id);
+    },[product_id]);
+    function fetchData(baseurl) {
+        fetch(baseurl)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data.result); // Check the structure of data
+                setProductsData(data.result); // Update state with fetched data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
     return (
         <section className="container product-detail mt-4">
             <div className="row">
@@ -13,7 +35,7 @@ export default function ProductDetail(props) {
                     <img src={logo} className="img-thumbnail" alt="product logo"/>
                 </div>
                 <div className='col-8'>
-                    <h3>Product title</h3>
+                    <h3>{ProductData.food_title}</h3>
                     <p>The Hainanese chicken rice is a dish that consists of succulent poached white chicken cut into
                         bite-size pieces and served on fragrant rice with some light soy sauce. The dish is topped with
                         sprigs of coriander leaf and sesame oil, and accompanied by a garlic-chilli dip.</p>

@@ -1,7 +1,8 @@
 # urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import UserViewSet, AddressViewSet, RegisterView, LoginView, VerificationView
+
+from .views import UserViewSet, AddressViewSet, RegisterView, LoginView, VerificationView, PlacesProxyView
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -12,5 +13,6 @@ urlpatterns = [
     path('register/', RegisterView.as_view()),
     path('login/', LoginView.as_view()),
     path('verify/', VerificationView.as_view()),
+    path('places-proxy/', PlacesProxyView.as_view()),
     # path('user/', UserAPIView.as_view()),
 ]

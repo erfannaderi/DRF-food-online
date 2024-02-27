@@ -8,9 +8,22 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from maktab_polo.settings import GOOGLE_PLACES_KEY
 from .emails import send_otp_via_email
 from .models import User, Address
 from .serializers import UserSerializer, AddressSerializer, UserRegister, VerifyAccountSerializer
+import requests
+from rest_framework import views
+from rest_framework.response import Response
+
+class PlacesProxyView(views.APIView):
+    def get(self, request, *args, **kwargs):
+
+        url = f"https://maps.googleapis.com/maps/api/js?key={GOOGLE_PLACES_KEY}&libraries=places&query=&libraries=places"
+        response = requests.get(url)
+
+        return Response(response.json())
+
 
 
 class UserViewSet(viewsets.ModelViewSet):

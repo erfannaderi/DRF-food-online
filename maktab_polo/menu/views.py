@@ -1,11 +1,9 @@
-from django.core.cache import cache
-from rest_framework.response import Response
+# views
 from drf_spectacular.utils import extend_schema
 from rest_framework import filters
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet
 
-from main.pagination import CustomPagination
 from menu.models import Category, ProductRatting, FoodItem, RawItem
 from menu.serializers import CategoryListSerializer, CategoryDetailSerializer, ProductRattingSerializer, \
     FoodItemSerializer, RawItemSerializer
@@ -16,7 +14,7 @@ class CategoryList(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryListSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['category_name', 'description', 'slug', 'vendor']
+    search_fields = ['category_name', 'description', 'slug']
 
 
 @extend_schema(responses=CategoryDetailSerializer)
@@ -42,28 +40,38 @@ class FoodItemViewSet(ModelViewSet):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'vendor']
+    search_fields = ['food_title', 'description', 'slug']
 
-    def list(self, request, *args, **kwargs):
-        cached_data = cache.get('food_items')  # Check if data is in cache
+    def get_queryset(self):
+        qs = super().get_queryset()
 
-        if cached_data:
-            return Response(cached_data)
+        if 'category' in self.request.GET:
+            category_id = self.request.GET['category']
+            category = Category.objects.get(id=category_id)
+            qs = qs.filter(category=category)
 
-        queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
+        return qs
 
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            response = self.get_paginated_response(serializer.data)
-
-            # Cache the paginated data for future requests
-            cache.set('food_items', response.data, timeout=60 * 60)  # Cache for 1 hour
-
-            return response
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+    # def list(self, request, *args, **kwargs):
+    #     cached_data = cache.get('food_items')  # Check if data is in cache
+    #
+    #     if cached_data:
+    #         return Response(cached_data)
+    #
+    #     queryset = self.filter_queryset(self.get_queryset())
+    #     page = self.paginate_queryset(queryset)
+    #
+    #     if page is not None:
+    #         serializer = self.get_serializer(page, many=True)
+    #         response = self.get_paginated_response(serializer.data)
+    #
+    #         # Cache the paginated data for future requests
+    #         cache.set('food_items', response.data, timeout=60 * 60)  # Cache for 1 hour
+    #
+    #         return response
+    #
+    #     serializer = self.get_serializer(queryset, many=True)
+    #     return Response(serializer.data)
 
 
 @extend_schema(responses=RawItemSerializer)

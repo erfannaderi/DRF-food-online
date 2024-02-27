@@ -20,10 +20,17 @@ import Profile from "./components/accounts/Profile";
 import AddressList from "./components/accounts/AddressList";
 import AddressDetail from "./components/accounts/AddressDetail";
 import AddAddress from "./components/accounts/AddAddress";
-const dotenv = require('dotenv')
-const buf = Buffer.from('BASIC=basic')
-const config = dotenv.parse(buf) // will return an object
-console.log(typeof config, config) // object { BASIC : 'basic' }
+import SellerRegister from "./components/vendor/SellerRegister";
+import SellerLogin from "./components/vendor/SellerLogin";
+import SellerDashboard from "./components/vendor/SellerDashboard";
+import SellerProducts from "./components/vendor/SellerProducts";
+import AddProduct from "./components/vendor/AddProduct";
+import SellerOrders from "./components/vendor/SellerOrders";
+import Customers from "./components/vendor/Customers";
+import Reports from "./components/vendor/Reports";
+import SellerProfile from "./components/vendor/SellerProfile";
+import SellerChangePassword from "./components/vendor/SellerChangePassword";
+
 function App() {
     return (
         <>
@@ -31,12 +38,13 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/categories" element={<Categories/>}/>
-                <Route path="/category/:category_slug/:category_id" element={<FoodItems/>}/>
+                <Route path="/category/:category_slug/:category_id/" element={<FoodItems/>}/>
                 <Route path="/products" element={<AllProductsList/>}/>
                 <Route path="/product/:cproduct_slug/:productid" element={<ProductDetail/>}/>
+                {/*customers*/}
                 <Route path="/checkout" element={<Checkout/>}/>
                 <Route path="/customer/register" element={<CustomerRegister/>}/>
-                <Route path="/login" element={<Login/>}/>
+                <Route path="/customer/login" element={<Login/>}/>
                 <Route path="/customer/dashboard" element={<Dashboard/>}/>
                 <Route path="/customer/orders" element={<Orders/>}/>
                 <Route path="/customer/change-password" element={<ChangePassword/>}/>
@@ -44,8 +52,25 @@ function App() {
                 <Route path="/customer/address-list" element={<AddressList/>}/>
                 <Route path="/customer/add-address" element={<AddAddress/>}/>
                 <Route path="/customer/address/:address_id" element={<AddressDetail/>}/>
+                {/*orders*/}
                 <Route path="/order/success" element={<OrderSuccessPage/>}/>
                 <Route path="/order/faliure" element={<OrderFaliurePage/>}/>
+                {/*seller*/}
+                <Route path="/seller/dashboard/" element={<SellerDashboard/>}/>
+                <Route path="/seller/register/" element={<SellerRegister/>}/>
+                <Route path="/seller/login/" element={<SellerLogin/>}/>
+                <Route path="/seller/orders/" element={<Orders/>}/>
+                <Route path="/seller/products/" element={<SellerProducts/>}/>
+                <Route path="/seller/profile/" element={<Profile/>}/>
+                <Route path="/seller/address-list/" element={<AddressList/>}/>
+                <Route path="/seller/add-address" element={<AddAddress/>}/>
+                <Route path="/seller/address/:address_id" element={<AddressDetail/>}/>
+                <Route path="/seller/product/add" element={<AddProduct/>}/>
+                <Route path="/seller/orders/" element={<SellerOrders/>}/>
+                <Route path="/seller/customers/" element={<Customers/>}/>
+                <Route path="/seller/reports/" element={<Reports/>}/>
+                <Route path="/seller/profile/" element={<SellerProfile/>}/>
+                <Route path="/seller/change-password/" element={<SellerChangePassword/>}/>
             </Routes>
             <Footer/>
 
