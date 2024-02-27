@@ -64,6 +64,9 @@ class FoodItem(models.Model):
     def __str__(self):
         return self.food_title
 
+    def tag_link(self):
+        tag_list = self.tags
+
 
 class ProductRatting(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ratting_customers')

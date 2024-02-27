@@ -12,7 +12,8 @@ class CategoryAdmin(admin.ModelAdmin):
         ("user", {"classes": ("collapse", "expanded"), 'fields': ('vendor', 'is_deleted')}
          ),
         ("Category's info",
-         {"classes": ("collapse", "expanded"), 'fields': ('category_name', 'description', 'slug', 'parent_category','image')}
+         {"classes": ("collapse", "expanded"),
+          'fields': ('category_name', 'description', 'slug', 'parent_category', 'image')}
          ),
     )
 

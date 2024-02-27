@@ -5,7 +5,6 @@ import {Link, useParams} from "react-router-dom";
 
 
 export default function FoodItem(props) {
-    const {product_slug, product_id} = useParams()
     return (
         <div className="col-12 col-md-3 mb-4">
                 <div className="custom-card card bg-image" style={{ width: "18rem" }}>

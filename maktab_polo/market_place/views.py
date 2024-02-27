@@ -5,6 +5,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets
+
+from accounts.permissions import IsAdminOrReadOnly
 from .models import Discount, Cart, Tax
 from .serializers import DiscountSerializer, CartSerializer, TaxSerializer
 
@@ -47,3 +49,4 @@ class CartViewSet(viewsets.ModelViewSet):
 class TaxViewSet(viewsets.ModelViewSet):
     queryset = Tax.objects.all()
     serializer_class = TaxSerializer
+    # permission_classes = IsAdminOrReadOnly

@@ -1,4 +1,5 @@
 # views
+from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema
 from rest_framework import filters
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
@@ -39,10 +40,17 @@ class ProductRattingViewSet(ModelViewSet):
 class FoodItemViewSet(ModelViewSet):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = {
+        'food_title': ['exact', 'contains'],
+        'description': ['exact', 'contains'],
+        'price': ['exact', 'gte', 'lte'],
+        'category__id': ['exact'],
+    }
     search_fields = ['food_title', 'description', 'slug']
 
-    def get_queryset(self):
+
+def get_queryset(self):
         qs = super().get_queryset()
 
         if 'category' in self.request.GET:

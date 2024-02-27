@@ -62,7 +62,7 @@ export default function Categories() {
                         <div className="custom-card card" style={{width: "18rem"}}>
                             <img src={category.image} className="card-img-top" alt="category_name"/>
                             <div className="card-body">
-                                <h4 className="card-title"><Link to={`/Category/${category.id}/${category.slug}`}>{category.category_name}</Link></h4>
+                                <h4 className="card-title"><Link to={`/Category/${category.slug}/${category.id}/`}>{category.category_name}</Link></h4>
                             </div>
                             <div className="card-footer">
                                 Products Sells : 200

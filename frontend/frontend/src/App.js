@@ -40,7 +40,7 @@ function App() {
                 <Route path="/categories" element={<Categories/>}/>
                 <Route path="/category/:category_slug/:category_id/" element={<FoodItems/>}/>
                 <Route path="/products" element={<AllProductsList/>}/>
-                <Route path="/product/:cproduct_slug/:productid" element={<ProductDetail/>}/>
+                <Route path="/product/:product_slug/:product_id" element={<ProductDetail/>}/>
                 {/*customers*/}
                 <Route path="/checkout" element={<Checkout/>}/>
                 <Route path="/customer/register" element={<CustomerRegister/>}/>
