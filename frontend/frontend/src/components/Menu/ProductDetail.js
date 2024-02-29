@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import '../../App.css';
 import {useShoppingCart} from "../../context/ShoppingCartContext.tsx";
+import {CartContext, UserContext} from "../../context/Context";
 
 
 export default function ProductDetail(props) {
@@ -13,11 +14,12 @@ export default function ProductDetail(props) {
     const [cartItemCount, setCartItemCount] = useState(0);
     const {getItemQuantity, increaseCartQuantity, decreaseCartQuantity, removeFromCart} = useShoppingCart();
     const quantity = getItemQuantity(product_id)
+    // const [cartData, setCartData]=useContext(CartContext)
 
     useEffect(() => {
         if (product_id) {
             fetchData(`${baseUrl}/fooditems/${product_id}`);
-            // checkProductInCart(product_id);
+            checkProductInCart(product_id);
         }
     }, [product_id]);
 
@@ -92,6 +94,7 @@ export default function ProductDetail(props) {
 
         if (existingCartItem) {
             existingCartItem.quantity += 1; // Increase the quantity
+            // setCartData(cartJson)
         } else {
             // If not in the cart, add as a new item
             const cartData = {
@@ -100,6 +103,7 @@ export default function ProductDetail(props) {
                 "quantity": 1
             };
             cartJson.push(cartData);
+            // setCartData(cartJson)
         }
 
         let cartString = JSON.stringify(cartJson);
@@ -134,6 +138,7 @@ export default function ProductDetail(props) {
             if (cartItemCount === 1) {
                 setCartButtonClickStatus(false);
             }
+            // setCartData(cartJson)
         }
     };
 

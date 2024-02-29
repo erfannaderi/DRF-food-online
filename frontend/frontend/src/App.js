@@ -36,10 +36,14 @@ import CustomerLogin from "./components/accounts/CustomerLogin";
 import { Store } from "./pages/Store.tsx";
 import { About } from "./pages/About.tsx";
 import {ShoppingCartProvider} from "./context/ShoppingCartContext.tsx";
+import {CartContext} from "./context/Context";
 
+const checkCart=localStorage.getItem("cartData");
 function App() {
+    const [cartData, setCartData] = React.useState(JSON.parse(checkCart));
     return (
         <>
+            <CartContext.Provider value={{cartData, setCartData}}>
             <ShoppingCartProvider>
             <Header/>
             <Routes>
@@ -87,6 +91,7 @@ function App() {
             </Routes>
             <Footer/>
             </ShoppingCartProvider>
+            </CartContext.Provider>
 
         </>
     );

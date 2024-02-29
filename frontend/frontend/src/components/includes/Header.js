@@ -16,8 +16,12 @@ import {
     MDBCollapse,
 } from 'mdb-react-ui-kit';
 import {useShoppingCart} from "../../context/ShoppingCartContext.tsx";
+import {useContext} from "react";
+import {CartContext, UserContext} from "../../context/Context";
 
-export default function App() {
+export default function App(props) {
+    const userContext = useContext(UserContext);
+    const{cartData,setCartData}=useContext(CartContext);
     const [openBasic, setOpenBasic] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const location = useLocation();
@@ -87,7 +91,8 @@ export default function App() {
                         </MDBNavbarLink>
                         <MDBNavbarLink href='/checkout' style={{marginRight: "5px"}}>
                             New Orders <i className="fa-duotone fa-cart-plus"></i>
-                            <span className="cart-count">5</span>
+                            {/*{cartData.length}*/}
+                                <span className="cart-count">0</span>
                         </MDBNavbarLink>
                         <MDBNavbarItem  id="customer-accounts"
                             onMouseEnter={handleCustomerAccountHover} onMouseLeave={handleCustomerAccountMouseLeave}>

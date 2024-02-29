@@ -48,7 +48,7 @@ def send_otp_via_email(email):
     if not otp:
         # Generate a new OTP if none exists
         otp = random.randint(100000, 999999)
-        cache.set(otp_key, otp, timeout=60)  # 5-minute OTP expiry
+        cache.set(otp_key, otp, timeout=120)  # 5-minute OTP expiry
 
     # Send the email
     try:

@@ -21,7 +21,7 @@ export function StoreItem({id, food_title, price, image}: StoreItemProps) {
                 <Card.Title className="d-flex justify-content-between align-items-baseline mb-4">
                     <span className="fs-2">{food_title}</span>
                     <span className="ms-2 text-muted">{formatCurrencyIR(price * 10)}</span>
-                    {/*<span className="ms-2 text-muted">{formatCurrencyUSD(price/50)}</span>*/}
+                    <span className="ms-2 text-muted">{formatCurrencyUSD(price/50)}</span>
                 </Card.Title>
                 <div className="mt-auto">
                     {/*// @ts-ignore*/}
