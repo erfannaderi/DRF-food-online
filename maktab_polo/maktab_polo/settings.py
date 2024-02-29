@@ -69,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    # 'accounts.middleware.JWTMiddleware',
 ]
 
 ROOT_URLCONF = 'maktab_polo.urls'
@@ -155,7 +156,7 @@ AUTH_USER_MODEL = 'accounts.User'
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
-    # ],
+    # # ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # ],
@@ -220,3 +221,5 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_EMAIL = "Online Food <django.erfan@gmail.com>"
 
 GOOGLE_PLACES_KEY = config('GOOGLE_PLACES_KEY')
+# zarinpal url
+# https://zarinp.al/zp2231468

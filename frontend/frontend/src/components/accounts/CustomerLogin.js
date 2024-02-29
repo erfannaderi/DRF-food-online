@@ -1,62 +1,59 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-import '../../App.css'
-import {Link} from "react-router-dom";
+import '../../App.css';
 
-export default function Login() {
+export default function CustomerLogin() {
+    const baseUrl = 'http://127.0.0.1:8000/API/';
+
     const [formError, setFormError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const baseUrl = 'http://127.0.0.1:8000/API/'
     const [loginFormData, setLoginFormData] = useState({
         "email": '',
         "password": ""
-    })
+    });
+
     const inputHandler = (event) => {
         setLoginFormData({
             ...loginFormData,
             [event.target.name]: event.target.value
-        })
-    }
+        });
+    };
 
     const submitHandler = (event) => {
         event.preventDefault();
 
-        const formData = new FormData();
-        formData.append('email', loginFormData['email']);
-        formData.append('password', loginFormData['password']);
-
-        axios.post(baseUrl + 'customer/login-1/', formData)
+        axios.post(baseUrl + 'customer/login-2/', {
+            email: loginFormData.email,
+            password: loginFormData.password
+        })
             .then(function (response) {
-                console.log(response);
-                if (response.data.bool === false) {
-                    setFormError(true);
-                    setErrorMessage(response.data.message);
-                } else {
+                console.log(response.data);
+                if (response.data.jwt) { // Assuming jwt is returned upon successful login
                     localStorage.setItem('customer_login', true);
-                    localStorage.setItem('customer_email', response.data.user);
+                    localStorage.setItem('customer_email', loginFormData.email);
                     setFormError(false);
                     setErrorMessage('');
+
+                    // Redirect to the dashboard page after successful login
+                    window.location.href = '/customer/dashboard';
+                } else {
+                    setFormError(true);
+                    setErrorMessage('Invalid email or password. Please try again.');
                 }
-                console.log(formError, errorMessage);
-                console.log(localStorage.getItem('customer_email'));
             })
             .catch(function (error) {
                 console.log(error);
+                setFormError(true);
+                setErrorMessage('An error occurred. Please try again.');
             });
     };
 
-    const buttonEnabled = loginFormData['email'] !== '' && loginFormData['password'] !== '';
-    const buttonEnabledOtp = loginFormData['email'] !== '';
-    const checkCustomer = localStorage.getItem('customer_login');
-    if (checkCustomer) {
-        window.location.href = '/customer/dashboard';
-    }
-
+    const buttonEnabled = loginFormData.email !== '' && loginFormData.password !== '';
 
     return (
-        <div className='container mt-4 '>
-            <div className='row '>
+        <div className='container mt-4'>
+            <div className='row'>
                 <div className='col-md-8 col-12 offset-2'>
                     <div className='card custom-card-accounts'>
                         <h4 className='card-header mb-4 custom-header-accounts'>Login</h4>
@@ -78,12 +75,8 @@ export default function Login() {
                                            name="password" required/>
                                 </div>
                                 <button type="button" disabled={!buttonEnabled} onClick={submitHandler}
-                                        className="btn btn-primary custom-button-accounts mb-5">Login
+                                        className="btn btn-primary custom-button-accounts">Login
                                 </button>
-                                {/*<button type="button" disabled={!buttonEnabledOtp} onClick={submitHandler}*/}
-                                {/*        className="btn btn-dark custom-button-accounts float-end"><Link to=''>OTP*/}
-                                {/*    Login</Link>*/}
-                                {/*</button>*/}
                                 {formError &&
                                     <p className="text-danger">{errorMessage}</p>}
                             </form>
@@ -94,4 +87,3 @@ export default function Login() {
         </div>
     );
 }
-

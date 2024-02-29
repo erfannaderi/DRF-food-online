@@ -4,9 +4,11 @@ import {Link} from "react-router-dom";
 import '../../App.css';
 import Paginations from "../includes/Paginations";
 import {MDBIcon, MDBPagination, MDBPaginationItem, MDBPaginationLink} from "mdb-react-ui-kit";
+import axios from "axios";
 
 
 export default function Categories() {
+
     const  baseUrl='http://127.0.0.1:8000/API/Menu'
     const [categories, setCategories] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
@@ -51,6 +53,7 @@ export default function Categories() {
     function goToPage(pageNumber) {
         setCurrentPage(pageNumber);
     }
+
     return (
         <section className="container categories">
             {/*all categories*/}

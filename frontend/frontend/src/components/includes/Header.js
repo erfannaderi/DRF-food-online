@@ -15,6 +15,7 @@ import {
     MDBDropdownItem,
     MDBCollapse,
 } from 'mdb-react-ui-kit';
+import {useShoppingCart} from "../../context/ShoppingCartContext.tsx";
 
 export default function App() {
     const [openBasic, setOpenBasic] = useState(false);
@@ -40,6 +41,7 @@ export default function App() {
     const isActive = (path) => {
         return location.pathname === path;
     };
+    const {openCart,cartQuantity} = useShoppingCart()
 
     return (
         <MDBNavbar expand='lg' light bgColor='success'>
@@ -65,12 +67,23 @@ export default function App() {
                                 Home
                             </MDBNavbarLink>
                         </MDBNavbarItem>
-                        <MDBNavbarItem style={{marginRight: '35rem'}}>
-                            <MDBNavbarLink href='/categories'>Categories</MDBNavbarLink>
+                        <MDBNavbarItem>
+                            <MDBNavbarLink active={isActive('/about')} href='/about'>
+                                About
+                            </MDBNavbarLink>
                         </MDBNavbarItem>
-                        <MDBNavbarLink href='/checkout' style={{marginRight: "5px"}}>
+                        <MDBNavbarItem>
+                            <MDBNavbarLink active={isActive('/store')} href='/store'>
+                                Store
+                            </MDBNavbarLink>
+                        </MDBNavbarItem>
+                        <MDBNavbarItem style={{marginRight: '28rem'}}>
+                            <MDBNavbarLink active={isActive('/categories')}  href='/categories'>Categories</MDBNavbarLink>
+                        </MDBNavbarItem>
+                        {/*href='/checkout'*/}
+                        <MDBNavbarLink  onClick={openCart} style={{marginRight: "5px"}}>
                             My Cart <i className="fa-duotone fa-cart-plus"></i>
-                            <span className="cart-count">5</span>
+                            <span className="cart-count">{cartQuantity}</span>
                         </MDBNavbarLink>
                         <MDBNavbarLink href='/checkout' style={{marginRight: "5px"}}>
                             New Orders <i className="fa-duotone fa-cart-plus"></i>

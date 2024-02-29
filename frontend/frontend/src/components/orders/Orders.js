@@ -74,7 +74,7 @@ export default function Orders() {
                                             <tr>
                                                 <td>1</td>
                                                 <td>
-                                                    <Link to='/'>
+                                                    <Link to='https://zarinp.al/zp2231468'>
                                                         <div style={{
                                                             display: 'flex',
                                                             flexDirection: 'column',

@@ -5,14 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8974e7f-0fc6-41ae-90a2-511ac0c52cfe" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Menu/CartItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Menu/ProductDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Menu/ProductDetail2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Menu/ShoppingCart.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/StoreItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/accounts/CustomerLogin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/accounts/Logout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/accounts/OtpLogin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/accounts/OtpVerf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/context/ShoppingCartContext.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/data/items.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/hooks/useLocalStorage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/About.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Store.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/utilities/formatCurrency.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maktab_polo/accounts/middleware.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maktab_polo/accounts/migrations/0013_alter_user_token_valid_from_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maktab_polo/orders/banks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maktab_polo/orders/exceptions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maktab_polo/orders/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maktab_polo/orders/zarin_pal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bun.lockb" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bun.lockb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Menu/Categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Menu/Categories.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Menu/FoodItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Menu/FoodItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/includes/ProductDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/includes/ProductDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/accounts/CustomerRegister.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/accounts/CustomerRegister.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/accounts/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/accounts/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/includes/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/includes/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/includes/ProductDetail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/orders/Orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/orders/Orders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../maktab_polo/accounts/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../maktab_polo/accounts/permissions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../maktab_polo/accounts/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../maktab_polo/accounts/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../maktab_polo/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../maktab_polo/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../maktab_polo/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../maktab_polo/accounts/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../maktab_polo/maktab_polo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../maktab_polo/maktab_polo/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../maktab_polo/menu/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/../maktab_polo/menu/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../maktab_polo/menu/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../maktab_polo/menu/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../maktab_polo/orders/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../maktab_polo/orders/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,22 +77,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/django_git/django_rest_resturant/frontend/frontend/src/components/includes",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "inlay.hints",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/django_git/django_rest_resturant/frontend/frontend/src/components/includes&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -77,10 +108,11 @@
       <recent name="E:\django_git\django_rest_resturant\frontend\frontend\src\components\vendor" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\django_git\django_rest_resturant\frontend\frontend\src\components\Menu" />
+      <recent name="E:\django_git\django_rest_resturant\frontend\frontend\src\context" />
       <recent name="E:\django_git\django_rest_resturant\frontend\frontend\src\assets" />
       <recent name="E:\django_git\django_rest_resturant\frontend\frontend\src\components\orders" />
       <recent name="E:\django_git\django_rest_resturant\frontend\frontend\src\components\accounts" />
-      <recent name="E:\django_git\django_rest_resturant\frontend\frontend\src\components\includes" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -98,6 +130,9 @@
       <workItem from="1708757672300" duration="8816000" />
       <workItem from="1708915223364" duration="7638000" />
       <workItem from="1708965595571" duration="33299000" />
+      <workItem from="1709094431015" duration="45407000" />
+      <workItem from="1709155654230" duration="14772000" />
+      <workItem from="1709175258433" duration="6760000" />
     </task>
     <servers />
   </component>

@@ -7,7 +7,7 @@ import Categories from "./components/Menu/Categories";
 import './App.css';
 import FoodItems from "./components/Menu/FoodItems";
 import AllProductsList from "./components/Menu/AllProductsList";
-import ProductDetail from "./components/includes/ProductDetail";
+import ProductDetail from "./components/Menu/ProductDetail";
 import Checkout from "./components/orders/Checkout";
 import CustomerRegister from "./components/accounts/CustomerRegister";
 import Login from "./components/accounts/Login";
@@ -30,13 +30,23 @@ import Customers from "./components/vendor/Customers";
 import Reports from "./components/vendor/Reports";
 import SellerProfile from "./components/vendor/SellerProfile";
 import SellerChangePassword from "./components/vendor/SellerChangePassword";
+import Logout from "./components/accounts/Logout";
+import OtpVerf from "./components/accounts/OtpVerf";
+import CustomerLogin from "./components/accounts/CustomerLogin";
+import { Store } from "./pages/Store.tsx";
+import { About } from "./pages/About.tsx";
+import {ShoppingCartProvider} from "./context/ShoppingCartContext.tsx";
 
 function App() {
     return (
         <>
+            <ShoppingCartProvider>
             <Header/>
             <Routes>
+                {/*main pages*/}
                 <Route path="/" element={<Home/>}/>
+                <Route path="/store" element={<Store/>}/>
+                <Route path="/about" element={<About/>}/>
                 <Route path="/categories" element={<Categories/>}/>
                 <Route path="/category/:category_slug/:category_id/" element={<FoodItems/>}/>
                 <Route path="/products" element={<AllProductsList/>}/>
@@ -44,7 +54,10 @@ function App() {
                 {/*customers*/}
                 <Route path="/checkout" element={<Checkout/>}/>
                 <Route path="/customer/register" element={<CustomerRegister/>}/>
+                <Route path="/customer/otp" element={<OtpVerf/>}/>
+                <Route path="/customer/login-2" element={<CustomerLogin/>}/>
                 <Route path="/customer/login" element={<Login/>}/>
+                <Route path="/customer/logout" element={<Logout/>}/>
                 <Route path="/customer/dashboard" element={<Dashboard/>}/>
                 <Route path="/customer/orders" element={<Orders/>}/>
                 <Route path="/customer/change-password" element={<ChangePassword/>}/>
@@ -73,6 +86,7 @@ function App() {
                 <Route path="/seller/change-password/" element={<SellerChangePassword/>}/>
             </Routes>
             <Footer/>
+            </ShoppingCartProvider>
 
         </>
     );
