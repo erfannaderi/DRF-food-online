@@ -10,7 +10,24 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class UserManager(BaseUserManager):
+    """
+     Custom manager for the User model providing methods to create regular users and superusers.
+     """
+
     def create_user(self, first_name: str, last_name: str, username: str, email: str, password: str = None) -> 'User':
+        """
+               Create a regular user with the provided details.
+
+               Parameters:
+               - first_name: First name of the user.
+               - last_name: Last name of the user.
+               - username: Username of the user.
+               - email: Email address of the user.
+               - password: Optional password for the user.
+
+               Returns:
+               - The created User instance.
+               """
         # Check for required fields
         if not email:
             raise ValueError("Please provide an email address")
@@ -28,6 +45,19 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, first_name: str, last_name: str, username: str, email: str,
                          password: str = None) -> 'User':
+        """
+             Create a superuser with administrative privileges.
+
+             Parameters:
+             - first_name: First name of the superuser.
+             - last_name: Last name of the superuser.
+             - username: Username of the superuser.
+             - email: Email address of the superuser.
+             - password: Optional password for the superuser.
+
+             Returns:
+             - The created User instance with superuser privileges.
+             """
         # extra_fields.setdefault("is_staff", True),
         # extra_fields.setdefault("is_superuser", True),
         # extra_fields.setdefault("is_active", True),
@@ -53,6 +83,32 @@ class UserManager(BaseUserManager):
 
 # always use permission mixin
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+      Custom user model representing a user with extended fields and permissions.
+
+      Methods:
+      - has_perm(perm: str, obj=None) -> bool:
+          Determines if the user has a specific permission.
+          Parameters:
+              - perm: The permission string to check.
+              - obj: Optional object for object-specific permissions.
+          Returns:
+              - True if the user has the specified permission (always returns True for the admin user).
+
+      - has_module_perms(app_label: str) -> bool:
+          Determines if the user has permissions to access a specific module (app).
+          Parameters:
+              - app_label: The label of the app/module to check permissions for.
+          Returns:
+              - True to grant access to all modules (always returns True).
+
+      - get_role() -> str:
+          Retrieves the role of the user as a human-readable string.
+          Returns:
+              - 'RESTAURANT' if the user role is set to 'RESTAURANT'.
+              - 'CLIENT' if the user role is set to 'CLIENT'.
+              - 'UNKNOWN' if the user role is not recognized or set to a different value.
+      """
     groups = models.ManyToManyField(
         Group,
         verbose_name=_('groups'),
@@ -119,6 +175,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Address(models.Model):
+    """
+    Model to store user addresses associated with the User model.
+
+    Fields:
+    - Add relevant fields to store address details such as street, city, state, and postal code.
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=250, blank=True, null=True)
     country = models.CharField(max_length=20, blank=True, null=True)
@@ -141,4 +203,3 @@ class Address(models.Model):
 #
 #     def __str__(self):
 #         return self.user.email
-

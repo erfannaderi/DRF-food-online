@@ -1,4 +1,4 @@
-#serializers
+# serializers
 from rest_framework import serializers
 
 from vendor.models import Vendor
@@ -22,16 +22,22 @@ class FoodItemSerializer(serializers.ModelSerializer):
 #         self.Meta.depth = 1
 
 class CategoryListSerializer(serializers.ModelSerializer):
-    vendor = serializers.PrimaryKeyRelatedField(queryset=Vendor.objects.all())  # Use PrimaryKeyRelatedField for vendor selection
+    vendor = serializers.PrimaryKeyRelatedField(
+        queryset=Vendor.objects.all())  # Use PrimaryKeyRelatedField for vendor selection
 
     class Meta:
         model = Category
         fields = ['id', 'vendor', 'category_name', 'description', 'slug', 'parent_category', 'created_at', 'updated_at',
-                  'is_deleted','image']
+                  'is_deleted', 'image']
 
     def create(self, validated_data):
         category = Category.objects.create(**validated_data)
         return category
+
+    # Use select_related or prefetch_related to optimize related queries
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        return ret
 
 
 class CategoryDetailSerializer(serializers.ModelSerializer):
@@ -40,11 +46,16 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'vendor', 'category_name', 'description', 'slug', 'parent_category', 'created_at', 'updated_at',
-                  'is_deleted', 'fooditems','image']
+                  'is_deleted', 'fooditems', 'image']
 
     def __init__(self, *args, **kwargs):
         super(CategoryDetailSerializer, self).__init__(*args, **kwargs)
         self.Meta.depth = 1
+
+    # Use select_related or prefetch_related to optimize related queries
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        return ret
 
 
 class ProductRattingSerializer(serializers.ModelSerializer):
@@ -60,4 +71,4 @@ class ProductRattingSerializer(serializers.ModelSerializer):
 class RawItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = RawItem
-        fields = '__all__'
+        fields = ('id', 'customer', 'product', 'ratings', 'reviews')

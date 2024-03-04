@@ -36,6 +36,17 @@ from accounts.models import User
 
 
 def send_otp_via_email(email):
+    """
+       Function to send an OTP (One-Time Passcode) via email for email verification.
+
+       Parameters:
+       - email: The email address to which the OTP will be sent.
+
+       Returns:
+       - True if the OTP is successfully sent; False otherwise.
+       """
+    otp_key = f"otp_{email}"  # Cache key for the OTP
+    cooldown_key = f"cooldown_{email}"  # Cache key for the cooldown period
     otp_key = f"otp_{email}"  # Cache key for the OTP
     cooldown_key = f"cooldown_{email}"  # Cache key for the cooldown period
 

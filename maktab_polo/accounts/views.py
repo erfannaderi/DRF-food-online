@@ -17,9 +17,17 @@ from maktab_polo.settings import GOOGLE_PLACES_KEY
 from .emails import send_otp_via_email
 from .models import User, Address
 from .serializers import UserSerializer, AddressSerializer, UserRegister, VerifyAccountSerializer
+from .tasks import delete_inactive_users
 
 
 class PlacesProxyView(views.APIView):
+    """
+       API endpoint to proxy requests to Google Places API for fetching necessary scripts.
+
+       Methods:
+       - get(self, request, *args, **kwargs):
+           Retrieves the Google Places API script using the provided API key and returns the response.
+       """
     def get(self, request, *args, **kwargs):
         url = f"https://maps.googleapis.com/maps/api/js?key={GOOGLE_PLACES_KEY}&libraries=places&query=&libraries=places"
         response = requests.get(url)
@@ -28,16 +36,43 @@ class PlacesProxyView(views.APIView):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """
+       API endpoint that allows users to be viewed or edited.
+
+       Attributes:
+       - queryset: Queryset containing all User objects.
+       - serializer_class: Serializer class for User objects.
+       """
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    delete_inactive_users()
 
 
 class AddressViewSet(viewsets.ModelViewSet):
+    """
+      API endpoint that allows addresses to be viewed or edited.
+
+      Attributes:
+      - queryset: Queryset containing all Address objects.
+      - serializer_class: Serializer class for Address objects.
+      """
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
 
 class RegisterView(APIView):
+    """
+      API endpoint for user registration and OTP email verification.
+
+      Methods:
+      - post(self, request):
+          Handles POST requests for user registration.
+          - Validates user data using UserRegister serializer.
+          - Saves the user if valid and sends an OTP email for verification.
+          - Returns a response with status and data messages.
+      """
+
     def post(self, request):
         try:
             serializer = UserRegister(data=request.data)
@@ -62,6 +97,17 @@ class RegisterView(APIView):
 
 
 class LoginView(APIView):
+    """
+     API endpoint for user login and JWT token generation.
+
+     Methods:
+     - post(self, request):
+         Handles POST requests for user login.
+         - Authenticates user based on email and password.
+         - Generates a JWT token with user ID and expiration time.
+         - Sets the JWT token in a response cookie for client-side storage.
+         - Returns a response with the JWT token.
+     """
     def post(self, request):
         email = request.data['email']
         password = request.data['password']
@@ -85,6 +131,13 @@ class LoginView(APIView):
 
 @csrf_exempt
 def customer_login(request):
+    """
+     Custom login view for authenticating users via POST request.
+
+     Logic:
+     - Authenticates the user based on email and password.
+     - Returns a JSON response indicating successful login or invalid credentials.
+     """
     email = request.POST.get('email', None)
     password = request.POST.get('password')
     user = authenticate(request, email=email, password=password)
@@ -98,10 +151,21 @@ def customer_login(request):
             "bool": False,
             "message": "invalid email or password"
         }
+    # notify_user_account_status(user.id)
+
     return JsonResponse(msg)
 
 
 class UserAPIView(APIView):
+    """
+      API endpoint for user authentication and JWT token validation.
+
+      Methods:
+      - get(self, request):
+          Handles GET requests to validate JWT token and retrieve user data.
+          - Verifies the JWT token and retrieves user information based on the token.
+          - Returns a response with the decoded token data.
+      """
     def get(self, request):
         token = request.COOKIES.get('jwt')
         if not token:
@@ -115,6 +179,15 @@ class UserAPIView(APIView):
 
 
 class LogoutView(APIView):
+    """
+      API endpoint for user logout and clearing JWT token.
+
+      Methods:
+      - post(self, request):
+          Handles POST requests to clear the JWT token stored in the client's cookies.
+          - Deletes the JWT token cookie from the response.
+          - Returns a response indicating successful logout.
+      """
     def post(self, request):
         response = Response()
         response.delete_cookie('jwt')
@@ -123,6 +196,31 @@ class LogoutView(APIView):
 
 
 class VerificationView(APIView):
+    """
+       API endpoint for verifying user accounts using OTP.
+
+       Methods:
+       - post(self, request):
+           Handles POST requests for verifying user accounts with OTP.
+           - Validates the email and OTP provided in the request.
+           - Checks if the email exists, OTP is correct, and token is not expired.
+           - Activates the user account if verification is successful.
+           Returns:
+           - JSON response indicating the verification status and message.
+
+       - patch(self, request):
+           Handles PATCH requests for resending OTP and activating user accounts.
+           - Resends the OTP email for the provided email address.
+           - Optionally activates the user account on successful OTP resend.
+           Returns:
+           - JSON response confirming the OTP resend status and message.
+
+       Note:
+       - The 'post' method is used for initial account verification with OTP.
+       - The 'patch' method is used for OTP resend and potential user account activation.
+       - Responses include status codes, messages, and data for different verification scenarios.
+       - Error handling is implemented to manage exceptions and provide appropriate responses.
+       """
     def post(self, request):
         try:
             serializer = VerifyAccountSerializer(data=request.data)

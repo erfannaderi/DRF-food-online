@@ -1,18 +1,17 @@
-# views.py
 from django.core.cache import cache
-from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets
+from rest_framework.response import Response
 
-from accounts.permissions import IsAdminOrReadOnly
 from .models import Discount, Cart, Tax
 from .serializers import DiscountSerializer, CartSerializer, TaxSerializer
 
 
-@extend_schema(responses=DiscountSerializer)
 class DiscountViewSet(viewsets.ModelViewSet):
+    """
+       A viewset for handling Discount objects with caching enabled for list and retrieve actions.
+    """
     queryset = Discount.objects.all()
     serializer_class = DiscountSerializer
 
@@ -26,7 +25,10 @@ class DiscountViewSet(viewsets.ModelViewSet):
 
 
 class CartViewSet(viewsets.ModelViewSet):
-    queryset = Cart.objects.all()
+    """
+       A viewset for handling Cart objects with caching enabled for the list action.
+    """
+    queryset = Cart.objects.select_related('user', 'food_item', 'discount').all()
     serializer_class = CartSerializer
 
     def list(self, request, *args, **kwargs):
@@ -45,8 +47,9 @@ class CartViewSet(viewsets.ModelViewSet):
         return response
 
 
-@extend_schema(responses=TaxSerializer)
 class TaxViewSet(viewsets.ModelViewSet):
+    """
+       A viewset for handling Tax objects without caching.
+       """
     queryset = Tax.objects.all()
     serializer_class = TaxSerializer
-    # permission_classes = IsAdminOrReadOnly

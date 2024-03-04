@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 
 class JWTMiddleware:
+    """
+    Middleware for validating JWT token in incoming requests and setting the authenticated user in the request.
+    """
     def __init__(self, get_response):
         self.get_response = get_response
 

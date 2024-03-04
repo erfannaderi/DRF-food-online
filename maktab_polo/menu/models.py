@@ -8,7 +8,7 @@ from vendor.models import Vendor
 
 # Create your models here.
 class Category(models.Model):
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, db_index=True)
     category_name = models.CharField(max_length=50, verbose_name=_('Category Name'))
     description = models.TextField(max_length=250, blank=True, verbose_name=_('Description'))
     image = models.ImageField(upload_to='media/category_images', null=True, blank=True)
@@ -64,8 +64,11 @@ class FoodItem(models.Model):
     def __str__(self):
         return self.food_title
 
-    def tag_link(self):
-        tag_list = self.tags
+    # def tag_link(self):
+    #     tag_list = self.tags
+
+    def get_related_data(self):
+        return FoodItem.objects.select_related('category').prefetch_related('vendor')
 
 
 class ProductRatting(models.Model):

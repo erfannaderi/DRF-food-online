@@ -32,6 +32,18 @@ DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = []
 
 # Application definition
+# Celery Configuration
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost' # RabbitMQ broker URL
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis broker URL
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # Redis result backend  # Redis result backend
+
+# Celery Beat Configuration (for periodic tasks)
+CELERY_BEAT_SCHEDULE = {
+    'delete_inactive_users': {
+        'task': 'accounts.tasks.delete_inactive_users',
+        'schedule': 60,  # runs every hour 3600
+    },
+}
 
 INSTALLED_APPS = [
     'admin_interface',
@@ -53,6 +65,8 @@ INSTALLED_APPS = [
     'menu',
     'market_place',
     'orders',
+    "debug_toolbar",
+    'maktab_polo.celery'
 ]
 
 #  admin customization
@@ -64,6 +78,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -223,3 +238,9 @@ DEFAULT_EMAIL = "Online Food <django.erfan@gmail.com>"
 GOOGLE_PLACES_KEY = config('GOOGLE_PLACES_KEY')
 # zarinpal url
 # https://zarinp.al/zp2231468
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
