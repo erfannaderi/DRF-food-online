@@ -29,8 +29,7 @@ This project is a comprehensive marketplace platform designed for selling a wide
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
-   cd <repository_directory>
+   git clone <[repository_url](https://github.com/erfannaderi/DRF-food-online/)>
    ```
 2. Install dependencies:
    ```bash
