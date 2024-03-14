@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  backend:
+    image: python:3.11.4-slim-buster
+    build:
+      context: ../maktab_polo
+    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - POSTGRES_HOST=chogolisa.liara.cloud
+      - POSTGRES_PORT=30694
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=Ymr8swoy3IfDYirvsDMZKqTt
+      - REDIS_HOST=chogolisa.liara.cloud
+      - REDIS_PORT=32582
+      - REDIS_PASSWORD=38Duew8KTHGfcExdmPuKa9js  # Adding Redis password
+
+  frontend:
+    build:
+      context: ../frontend/frontend
+    image: node:latest
+    volumes:
+      - react_build:/frontend/build
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:8080
+    volumes:
+      - ../Nginx/nginx-setup.config:/etc/nginx/conf.d/default.conf:ro
+      - react_build:/var/www/frontend
+    depends_on:
+      - backend
+      - frontend
+
+  redis:
+    image: redis:latest
+    ports:
+      - "32582:32582"
+    hostname: chogolisa.liara.cloud
+    environment:
+      - REDIS_PASSWORD=38Duew8KTHGfcExdmPuKa9js  # Adding Redis password
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: Ymr8swoy3IfDYirvsDMZKqTt
+      POSTGRES_DB: postgres
+    ports:
+      - "30694:30694"
+    hostname: chogolisa.liara.cloud
+
+volumes:
+  react_build:
